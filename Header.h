@@ -14,11 +14,13 @@ public:
     void fill_y(const double& y);
     void fill_z(const double& z);
 
-    void info(); //output of coordinates 
+    Vector3D summ(const Vector3D& v2) const;
+
+    void info() const; //output of coordinates 
 
     Vector3D(); //default constructor
     Vector3D(const double&, const double&, const double&); //constructor
-    ~Vector3D(){};
+    ~Vector3D() {}
 };
 
 class Segment3D {
@@ -36,7 +38,8 @@ public:
     const Vector3D& get_pr() const;
 
     
-    void info(); //output of start and end coordinates 
+    void info() const; //output of start and end coordinates 
+    void inverse(); //swap start and end points of the segment
        
     Segment3D(); //default constructor
     Segment3D(const Vector3D& , const Vector3D& ); //constructor via two points 
