@@ -6,13 +6,15 @@ private:
     double z;  
 
 public:
-    double get_x() const; //read-only function
-    double get_y() const;
-    double get_z() const;
+    const double& get_x() const; //read-only function
+    const double& get_y() const;
+    const double& get_z() const;
     
     void fill_x(const double& x); //write function
     void fill_y(const double& y);
     void fill_z(const double& z);
+
+    void info(); //output of coordinates 
 
     Vector3D(); //default constructor
     Vector3D(const double&, const double&, const double&); //constructor
@@ -24,17 +26,19 @@ private:
     Vector3D start;
     Vector3D end;
     Vector3D projections;
-    
-
-public:
-    Vector3D get_start() const; //read-only function
-    Vector3D get_end() const;
-    Vector3D get_pr() const;
-
+    void set_projections();
     void fill_start(const Vector3D& start); //write function
     void fill_end(const Vector3D& end);
-       
 
+public:
+    const Vector3D& get_start() const; //read-only function
+    const Vector3D& get_end() const;
+    const Vector3D& get_pr() const;
+
+    
+    void info(); //output of start and end coordinates 
+       
+    Segment3D(); //default constructor
     Segment3D(const Vector3D& , const Vector3D& ); //constructor via two points 
     ~Segment3D(){};
 };
