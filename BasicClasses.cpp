@@ -7,20 +7,10 @@
 
 using namespace std;
 
-void Vector3D::fill_x(const double& x) {
+void Vector3D::set(const double& x, const double& y, const double& z) {
 	this->x = x;
-}
-
-void Vector3D::fill_y(const double& y) {
 	this->y = y;
-}
-
-void Vector3D::fill_z(const double& z) {
 	this->z = z;
-}
-
-void Vector3D::info() const{
-	cout << "(" << get_x() << ", " << get_y() << ", " << get_z() << ")";
 }
 
 const double& Vector3D::get_x() const {
@@ -35,22 +25,34 @@ const double& Vector3D::get_z() const {
 	return(z);
 }
 
-Vector3D Vector3D::summ(const Vector3D& v2) const {
+Vector3D Vector3D::operator+(const Vector3D& v2) const {
 	Vector3D v(x + v2.get_x(), y + v2.get_y(), z + v2.get_z());
 	return(v);
 }
 
+Vector3D Vector3D::operator-(const Vector3D& v2) const {
+	Vector3D v(x - v2.get_x(), y - v2.get_y(), z - v2.get_z());
+	return(v);
+}
+
+Vector3D Vector3D::operator*(const double& a) const {
+	Vector3D v(x*a, y*a, z*a);
+	return(v);
+}
+
+Vector3D operator* (const double& a, const Vector3D& v2) {
+	Vector3D v(v2.x * a, v2.y * a, v2.z * a);
+	return(v);
+}
+
+
 Vector3D::Vector3D() {
 	double a = 0;
-	fill_x(a);
-	fill_y(a);
-	fill_z(a);
+	set(a, a, a);
 }
 
 Vector3D::Vector3D(const double& x, const double& y, const double& z) {
-	fill_x(x);
-	fill_y(y);
-	fill_z(z);
+	set(x, y, z);
 }
 
 void Segment3D::fill_start(const Vector3D& start) {
@@ -59,18 +61,6 @@ void Segment3D::fill_start(const Vector3D& start) {
 
 void Segment3D::fill_end(const Vector3D& end) {
 	this->end = end;
-}
-
-void Segment3D::inverse() {
-
-}
-
-void Segment3D::info() const{
-	cout << "coordinates: [";
-	start.info();
-	cout << ",";
-	end.info();
-	cout << "] \n";
 }
 
 const Vector3D& Segment3D::get_start() const {
@@ -86,13 +76,12 @@ const Vector3D& Segment3D::get_pr() const {
 }
 
 void Segment3D::set_projections() {
-	projections.fill_x(end.get_x() - start.get_x());
-	projections.fill_y(end.get_y() - start.get_y());
-	projections.fill_z(end.get_z() - start.get_z());
+	projections.set(end.get_x() - start.get_x(), end.get_y() - start.get_y(), end.get_z() - start.get_z());
 }
 
 
 Segment3D::Segment3D() {
+
 	Vector3D v1;
 	Vector3D v2(1,0,0);
 	fill_start(v1);
@@ -106,8 +95,32 @@ Segment3D::Segment3D(const Vector3D& v1, const Vector3D& v2){
 	set_projections();	
 }
 
+
+
 double determinant2D(const double& A, const double& B, const double& C, const double& D) {
 	return (A * D - B * C);
+}
+
+void Vector3D::operator+=(const Vector3D& v2) {
+	set(x + v2.get_x(), y + v2.get_y(), z + v2.get_z());
+}
+
+void Vector3D::operator-=(const Vector3D& v2) {
+	set(x - v2.get_x(), y - v2.get_y(), z - v2.get_z());
+}
+
+void Vector3D::operator*=(const double a) {
+	set(x * a, y * a, z * a);
+}
+
+ostream& operator<<(ostream& os, const Vector3D& v) {
+	os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return (os);
+}
+
+ostream& operator<<(ostream& os, const Segment3D& sg) {
+	os << "[" << sg.start << ", " << sg.end << "]";
+	return (os);
 }
 
 
